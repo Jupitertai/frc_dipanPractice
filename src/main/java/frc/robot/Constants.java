@@ -12,11 +12,26 @@ package frc.robot;
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
-public final class Constants {
+public final class Constants {//final 是永久的變量，永遠不可以被修改
   public static class chassisID {
     public static final int FL = 1;
     public static final int FR = 2;
     public static final int RL = 3;
     public static final int RR = 4;
   }
+
+  public static class limelight {//static 變數: 使變數成為常量，一旦賦值後就不能再改變。
+    public static String Name = "limelight";
+  }
+  public static class limelightName{//
+    public static final String Name ="limelightName";
+  }
+
+  public static class CANdleCOnstants{
+    public static final int ID = 0;
+  }
+  
 }
+
+
+

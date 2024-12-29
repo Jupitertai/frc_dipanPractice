@@ -4,12 +4,20 @@
 
 package frc.robot;
 
+import frc.robot.LimelightHelpers.LimelightResults;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.Candle;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.chassis;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
@@ -21,6 +29,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final chassis mChassis = new chassis();
+  private final Candle mCandle = new Candle();
+  private final Limelight mLimelight= new Limelight();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final XboxController m_driverController = new XboxController(0); 
@@ -44,6 +54,12 @@ public class RobotContainer {
    */
   
   private void configureBindings() {
+    new JoystickButton(m_driverController,1).whileTrue(new InstantCommand(mCandle::startRainbowAnimation)).onFalse(new InstantCommand(mCandle::startTwinkleAnimation));
+    new JoystickButton(m_driverController,2).whileTrue(new InstantCommand(mCandle::setStaticColor)).onFalse(new InstantCommand(mCandle::startTwinkleAnimation));
+    new JoystickButton(m_driverController,3).whileTrue(new InstantCommand(mCandle::stopAnimation));
+    new JoystickButton(m_driverController,4).onTrue(new InstantCommand(mCandle::periodic));
+
+    new POVButton(m_driverController, 0).whileTrue(new InstantCommand(mCandle::periodic));
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
