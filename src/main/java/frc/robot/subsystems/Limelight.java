@@ -23,12 +23,12 @@ public double getFiducialID(){
     
 }
 public double getTag_Area(){
-    ID = LimelightHelpers.getTA("");
-    return ID;
+    ta = LimelightHelpers.getTA("");
+    return ta;
 }
 public double getTX(){
-    ID = LimelightHelpers.getTX("");
-    return ID;   
+    tx = LimelightHelpers.getTX("");
+    return tx;   
 }
 
   @Override

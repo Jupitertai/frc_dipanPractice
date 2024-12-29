@@ -7,6 +7,8 @@ import com.ctre.phoenix.led.CANdleFaults;
 import com.ctre.phoenix.led.RainbowAnimation;
 import com.ctre.phoenix.led.StrobeAnimation;
 import com.ctre.phoenix.led.TwinkleAnimation;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.LimelightHelpers;
 import frc.robot.Constants.limelightName;
@@ -22,7 +24,7 @@ public class Candle extends SubsystemBase {
     
 
     // CAN ID
-    private final int candleID = 1; // 根据实际硬件配置修改
+    private final int candleID = 0; // 根据实际硬件配置修改
     
     public Candle() {
         // 初始化 CANdle
@@ -33,8 +35,8 @@ public class Candle extends SubsystemBase {
 
         // 初始化默认动画
         
-        rainbowAnimation = new RainbowAnimation(1.0, 0.5, 64);
-        twinkleAnimation = new TwinkleAnimation(255, 255, 0, 0, 0.5, 64, TwinkleAnimation.TwinklePercent.Percent64);
+        rainbowAnimation = new RainbowAnimation(1.0, 0.5, 8);
+        twinkleAnimation = new TwinkleAnimation(255, 255, 0, 0, 0.5, 8, TwinkleAnimation.TwinklePercent.Percent64);
         
     }
 
@@ -106,20 +108,43 @@ public class Candle extends SubsystemBase {
         candle.getFaults(faults);
         return faults.hasAnyFault();
     }
+//燈條距離大小變化燈光也變化
+    public void lightchange(){
+        double   ID  = LimelightHelpers.getFiducialID("");
+        double Tag_Area = LimelightHelpers.getTA("");
+        if (ID != -1){
+            if (Tag_Area > 0 && Tag_Area < 4) {
+                startStrobeAnimation(200, 200, 200);
+                } 
+            else{
+                startTwinkleAnimation();
+                }            
+                }
+        else{
+            stopAnimation();        
+            }        
+        }
+//area 在0到五閒往前走 在5-10后往後走 如果x軸和Y軸的數值不是0 就去調整方位
+    
+    public void moveAnimation(){
+        double   ID  = LimelightHelpers.getFiducialID("");
+        double Tag_Area = LimelightHelpers.getTA("");
+        while (Tag_Area > 0 && Tag_Area < 5 ){
+            
+            
+        }
+    }
+//area 在0到五閒往前走 在5-10后往後走 如果x軸和Y軸的數值不是0 就去調整方位
 
     @Override
-    public void periodic() {
-        // 定期更新方法，用于监控状态或执行任务
-        double ID  = LimelightHelpers.getFiducialID("");
-        if (ID != -1){
-            startStrobeAnimation(255, 255, 255);
-        }
-        else{
-            stopAnimation();
+    public void periodic() {// 定期更新方法，用于监控状态或执行任务
+        lightchange();
 
-        }
+        
+    }
+}
+        
         
 
     
-    }
-}
+    

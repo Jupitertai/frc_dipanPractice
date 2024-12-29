@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.chassisID;
+import frc.robot.LimelightHelpers;
 
 public class chassis extends SubsystemBase {
   public final WPI_VictorSPX Frontleft = new WPI_VictorSPX(chassisID.FL);
@@ -40,6 +41,19 @@ public class chassis extends SubsystemBase {
   
   public void drive(double X, double Y){
     tank.arcadeDrive(-X, -Y);
+  }
+
+  public void moveAnimation(){
+    double ID  = LimelightHelpers.getFiducialID("");
+    double Tag_Area = LimelightHelpers.getTA("");
+    
+    System.out.println(Tag_Area);
+
+    while (Tag_Area > 0 && Tag_Area < 5 ){
+      Frontleft.set(0.3);
+      Frontright.set(0.3);
+        // tank.arcadeDrive(0.3, 0);
+    }
   }
   
   /**
